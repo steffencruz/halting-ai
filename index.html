@@ -5,19 +5,86 @@
     <style>
       body {
         margin: 0;
-        background: #000;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        height: 100vh;
+        background: #f9f6f6;
+        color: rgb(127, 128, 127);
+        font-family: monospace;
+        font-size: 10px;
+        line-height: 1.2;
+        padding: 20px;
+        overflow: auto;
       }
-      img {
+      #ascii-container {
+        white-space: pre;
+        margin: 0 auto;
         max-width: 100%;
-        max-height: 100%;
+        overflow-x: auto;
+      }
+      /* Cursor effect */
+      .cursor {
+        animation: blink 1s infinite;
+      }
+      @keyframes blink {
+        0%, 50% { opacity: 1; }
+        51%, 100% { opacity: 0; }
       }
     </style>
   </head>
   <body>
-    <img src="turing-ascii.png" alt="Halting Landing">
+    <div id="ascii-container"></div>
+
+    <script>
+      async function loadAndStreamAscii() {
+        const container = document.getElementById('ascii-container');
+
+        try {
+          // Fetch the ASCII art file
+          const response = await fetch('turing.txt');
+          if (!response.ok) {
+            throw new Error('Failed to load ASCII art');
+          }
+
+          const text = await response.text();
+          const characters = text.split('');
+
+          // Configuration for the streaming effect
+          const charsPerFrame = 50; // Number of characters to add per frame
+          const frameDelay = 10; // Delay between frames in milliseconds
+
+          let currentIndex = 0;
+          let currentText = '';
+
+          // Function to add characters
+          function addCharacters() {
+            // Add multiple characters per frame for faster rendering
+            for (let i = 0; i < charsPerFrame && currentIndex < characters.length; i++) {
+              currentText += characters[currentIndex];
+              currentIndex++;
+            }
+
+            // Update the container with current text and cursor
+            container.textContent = currentText;
+
+            // If we haven't reached the end, continue
+            if (currentIndex < characters.length) {
+              // Add cursor effect while typing
+              container.innerHTML = currentText + '<span class="cursor">█</span>';
+              setTimeout(addCharacters, frameDelay);
+            } else {
+              // Remove cursor when done
+              container.textContent = currentText;
+            }
+          }
+
+          // Start the streaming effect
+          addCharacters();
+
+        } catch (error) {
+          container.textContent = 'Error loading ASCII art: ' + error.message;
+        }
+      }
+
+      // Start loading when the page loads
+      window.addEventListener('load', loadAndStreamAscii);
+    </script>
   </body>
 </html>
