@@ -13,18 +13,20 @@
         display: flex;
         justify-content: center;
         align-items: flex-start;
-        padding-top: 1rem;
+        padding: 0;
         box-sizing: border-box;
         overflow-x: hidden;
       }
       #ascii-container {
-        /* Each character should be 1/300th of the viewport width */
-        font-size: calc(100vw / 300);
+        /* Slightly larger base size for better visibility */
+        font-size: calc(0.335vw);
         white-space: pre;
-        line-height: 1.2;
+        line-height: 1;
         text-align: center;
         width: 100vw;
         overflow-x: hidden;
+        margin: 0;
+        padding: 0;
       }
       /* Cursor effect */
       .cursor {
