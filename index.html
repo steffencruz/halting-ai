@@ -18,12 +18,13 @@
         overflow-x: hidden;
       }
       #ascii-container {
-        font-size: clamp(2.5px, calc(0.33vw + 1px), 8px);
+        /* Each character should be 1/300th of the viewport width */
+        font-size: calc(100vw / 300);
         white-space: pre;
         line-height: 1.2;
         text-align: center;
-        max-width: 100%;
-        overflow-x: auto;
+        width: 100vw;
+        overflow-x: hidden;
       }
       /* Cursor effect */
       .cursor {
