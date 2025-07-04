@@ -18,15 +18,16 @@
         overflow-x: hidden;
       }
       #ascii-container {
-        /* Slightly larger base size for better visibility */
-        font-size: calc(0.335vw);
+        /* Much larger font size - each character should take up 0.33% of viewport width */
+        font-size: 0.33vw;
         white-space: pre;
         line-height: 1;
-        text-align: center;
+        text-align: left;
         width: 100vw;
         overflow-x: hidden;
         margin: 0;
         padding: 0;
+        display: block;
       }
       /* Cursor effect */
       .cursor {
